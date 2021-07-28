@@ -1,0 +1,19 @@
+{
+  "name": "zendesk-mario-bravo",
+  "version": "1.0.0",
+  "description": "Zndesk Coding Challenge ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbravo10/Zendesk-Mario-Bravo.git"
+  },
+  "author": "Mario Bravo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mbravo10/Zendesk-Mario-Bravo/issues"
+  },
+  "homepage": "https://github.com/mbravo10/Zendesk-Mario-Bravo#readme"
+}
