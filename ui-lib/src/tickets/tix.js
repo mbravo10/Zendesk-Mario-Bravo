@@ -10,7 +10,7 @@ export const LoadTix = () => {
     try {
       const res = await axios.get(site);
       console.log(res);
-      const data = [...res.data.requests];
+      const data = [...res.data.tickets];
       setTickets([...data]);
       console.log(tickets);
     } catch (error) {

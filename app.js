@@ -5,7 +5,7 @@ const axios = require("axios");
 const config = require("config");
 app.use(cors());
 
-const URL = "https://zccmario.zendesk.com/api/v2/requests";
+const URL = "https://zccmario.zendesk.com/api/v2/tickets";
 const token = config.get("token");
 const user = config.get("user");
 const usernamePasswordBuffer = Buffer.from(user + ":" + token);
