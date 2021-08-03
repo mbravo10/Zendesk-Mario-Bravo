@@ -1,37 +1,19 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
 
-const site = "https://zccmario.zendesk.com/api/v2/requests";
-const token = "rvtGswAyzmWmtUW686a5VjldZDsbhkK0FMiHc02B";
-const pass = "G0a1mark10!";
-const username = "mario-bravo99@hotmail.com";
-const usernamePasswordBuffer = Buffer.from(username + ":" + pass);
-const base64data = usernamePasswordBuffer.toString("base64");
+const site = "http://localhost:5000/api";
 
 export const LoadTix = () => {
-  const [tickets, getTickets] = useState([]);
+  const [tickets, setTickets] = useState([]);
+  const response = async () => {
+    try {
+      const res = await axios.get(site);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  useEffect(() => {
-    const test = async () => {
-      try {
-        const axiosObject = axios.create({
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Basic ${base64data}`,
-          },
-        });
-
-        const res = await axiosObject.get(site);
-        console.log(res);
-        const json = await res.json();
-        console.log(json);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-  }, []);
-
-  const load = tickets.map((e) => <li> {e} </li>);
-
-  return load;
+  return <Button onClick={response}> Get Local Weather</Button>;
 };
