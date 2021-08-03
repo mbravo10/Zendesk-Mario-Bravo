@@ -10,10 +10,23 @@ export const LoadTix = () => {
     try {
       const res = await axios.get(site);
       console.log(res);
+      const data = [...res.data.requests];
+      setTickets([...data]);
+      console.log(tickets);
     } catch (error) {
       console.log(error);
     }
   };
 
-  return <Button onClick={response}> Get Local Weather</Button>;
+  return (
+    <div>
+      <Button onClick={response}> Get Local Weather</Button>
+      <li>
+        {" "}
+        {tickets.map((e) => (
+          <ul> {e.description} </ul>
+        ))}{" "}
+      </li>
+    </div>
+  );
 };

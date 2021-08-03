@@ -20,7 +20,9 @@ app.use("/api", async (req, res) => {
     res.json(response.data);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Wrong API key");
+    res
+      .status(500)
+      .send("Sorry, could not process your request, maybe try to refresh?");
   }
 });
 
