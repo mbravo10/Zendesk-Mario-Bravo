@@ -1,15 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Button, Card, Row } from "react-bootstrap";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  useHistory,
-  Link,
-} from "react-router-dom";
-import SoloTicket from "./soloTix";
+import SoloTicket from "./pagination";
 
 const site = "http://localhost:5000/api";
 
@@ -17,14 +9,22 @@ export const LoadTix = () => {
   const [tickets, setTickets] = useState([]);
   const [onLoad, setOnLoad] = useState(false);
   const [onError, setOnError] = useState(false);
-
-  const history = useHistory();
+  const [data, setData] = useState({
+    offset: 0,
+    currentPage: 0,
+    perPage: 10,
+    pageCount: 0,
+  });
 
   const response = async () => {
     try {
       const res = await axios.get(site);
-      const data = [...res.data.tickets];
-      setTickets([...data]);
+      const rData = [...res.data.tickets];
+      setTickets([...rData]);
+      setData({
+        ...data,
+        pageCount: Math.ceil(rData.length / data.perPage),
+      });
       setOnLoad(true);
     } catch (error) {
       console.log(error);
@@ -63,6 +63,7 @@ export const LoadTix = () => {
           {" "}
           {onLoad ? "Got Tickets, click to refresh" : "Get Ticket Requests"}
         </Button>
+        <Button>{data.pageCount}</Button>
       </Row>
       <hr />
       <Row xs={1} md={2} className="g-4">
