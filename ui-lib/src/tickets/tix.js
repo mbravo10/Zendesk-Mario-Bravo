@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Card } from "react-bootstrap";
 
 const site = "http://localhost:5000/api";
@@ -18,16 +18,25 @@ export const LoadTix = () => {
     }
   };
 
+  const getDate = (info) => {
+    var text = info.substr(0, 10);
+    return text;
+  };
+
   const goThroughCards = tickets.map((e) => (
-    <Card style={{ width: "30rem" }}>
-      <Card.Body>
-        <Card.Title>{e.subject}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{e.title}</Card.Subtitle>
-        <Card.Text>{e.description}</Card.Text>
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
-      </Card.Body>
-    </Card>
+    <article key={e.id}>
+      <Card className="text-center">
+        <Card.Header>{e.subject}</Card.Header>
+        <Card.Body>
+          <Card.Title>Status: {e.status} </Card.Title>
+          <Card.Text>{e.description}</Card.Text>
+          <Button variant="primary">Go to Ticket</Button>
+        </Card.Body>
+        <Card.Footer className="text-muted">
+          {getDate(e.created_at)}
+        </Card.Footer>
+      </Card>
+    </article>
   ));
   return (
     <div>
