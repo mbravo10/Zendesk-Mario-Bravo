@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { Button, Card, Row } from "react-bootstrap";
-import SoloTicket from "./pagination";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Row, Pagination } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
+import "../App.css";
 
 const site = "http://localhost:5000/api";
 
@@ -16,14 +17,41 @@ export const LoadTix = () => {
     pageCount: 0,
   });
 
+  const handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    const offset = selectedPage * data.perPage;
+
+    setData({
+      ...data,
+      currentPage: selectedPage,
+      offset: offset,
+    });
+  };
+
   const response = async () => {
     try {
       const res = await axios.get(site);
       const rData = [...res.data.tickets];
       setTickets([...rData]);
+      const posts = tickets.slice(data.offset, data.offset + data.perPage);
+      const goThroughCards = posts.map((e) => (
+        <article key={e.id}>
+          <Card className="text-center" border="primary">
+            <Card.Header>{e.subject}</Card.Header>
+            <Card.Body>
+              <Card.Title>Status: {e.status} </Card.Title>
+              <Card.Text>{e.description}</Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              Ticket #{e.id} - Date created: {getDate(e.created_at)}
+            </Card.Footer>
+          </Card>
+        </article>
+      ));
       setData({
         ...data,
         pageCount: Math.ceil(rData.length / data.perPage),
+        goThroughCards,
       });
       setOnLoad(true);
     } catch (error) {
@@ -38,21 +66,9 @@ export const LoadTix = () => {
     return text;
   };
 
-  const goThroughCards = tickets.map((e) => (
-    <article key={e.id}>
-      <Card className="text-center" border="primary">
-        <Card.Header>{e.subject}</Card.Header>
-        <Card.Body>
-          <Card.Title>Status: {e.status} </Card.Title>
-          <Card.Text>{e.description}</Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          Ticket #{e.id} - Date created: {getDate(e.created_at)}
-        </Card.Footer>
-      </Card>
-    </article>
-  ));
-
+  useEffect(() => {
+    response();
+  });
   return (
     <div>
       <Row>
@@ -63,11 +79,23 @@ export const LoadTix = () => {
           {" "}
           {onLoad ? "Got Tickets, click to refresh" : "Get Ticket Requests"}
         </Button>
-        <Button>{data.pageCount}</Button>
       </Row>
       <hr />
       <Row xs={1} md={2} className="g-4">
-        {goThroughCards}
+        {data.goThroughCards}
+        <ReactPaginate
+          previousLabel={"prev"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={data.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
       </Row>
     </div>
   );
