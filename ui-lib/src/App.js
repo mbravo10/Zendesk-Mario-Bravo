@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Alert } from "react-bootstrap";
+import { Alert, Container, Row, Col } from "react-bootstrap";
 import { LoadTix } from "./tickets/tix";
 
 function App() {
@@ -8,9 +8,8 @@ function App() {
       <Alert variant="success">
         <Alert.Heading>Hey, nice to see you</Alert.Heading>
         <p>
-          Aww yeah, you successfully read this important alert message. This
-          example text is going to run a bit longer so that you can see how
-          spacing within an alert works with this kind of content.
+          This is the mobile ticket viewer for Zendesk. If you have any comments
+          or concerns please feel free to reach us here:
         </p>
         <hr />
         <p className="mb-0">
@@ -18,7 +17,14 @@ function App() {
           nice and tidy.
         </p>
       </Alert>
-      <LoadTix />
+      <Container>
+        <Row>
+          <Col>
+            {" "}
+            <LoadTix />{" "}
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
