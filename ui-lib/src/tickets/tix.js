@@ -7,6 +7,7 @@ import {
   Route,
   Redirect,
   useHistory,
+  Link,
 } from "react-router-dom";
 import SoloTicket from "./soloTix";
 
@@ -16,10 +17,7 @@ export const LoadTix = () => {
   const [tickets, setTickets] = useState([]);
   const [onLoad, setOnLoad] = useState(false);
   const [onError, setOnError] = useState(false);
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const history = useHistory();
 
   const response = async () => {
@@ -47,14 +45,6 @@ export const LoadTix = () => {
         <Card.Body>
           <Card.Title>Status: {e.status} </Card.Title>
           <Card.Text>{e.description}</Card.Text>
-          <Button variant="primary" onClick={handleShow}>
-            Go to Ticket
-          </Button>
-
-          <SoloTicket props={show} onClick={() => handleClose()}>
-            {" "}
-            Hello
-          </SoloTicket>
         </Card.Body>
         <Card.Footer>
           Ticket #{e.id} - Date created: {getDate(e.created_at)}

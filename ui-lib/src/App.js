@@ -15,7 +15,7 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">Zendesk</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#tickets">Home</Nav.Link>
+            <Nav.Link href="/tickets">Tickets</Nav.Link>
             <Nav.Link href="#api">API</Nav.Link>
           </Nav>
         </Container>
