@@ -19,12 +19,12 @@ export const LoadTix = () => {
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
-    const offset = selectedPage * data.perPage;
+    const offsett = selectedPage * data.perPage;
 
     setData({
       ...data,
       currentPage: selectedPage,
-      offset: offset,
+      offset: offsett,
     });
   };
 
@@ -68,7 +68,7 @@ export const LoadTix = () => {
 
   useEffect(() => {
     response();
-  });
+  }, [data.offset]);
   return (
     <div>
       <Row>
@@ -77,7 +77,7 @@ export const LoadTix = () => {
           variant={onLoad ? "success" : "secondary"}
         >
           {" "}
-          {onLoad ? "Got Tickets, click to refresh" : "Get Ticket Requests"}
+          {onLoad ? "Tickets Loaded, scroll to view" : "Get Ticket Requests"}
         </Button>
       </Row>
       <hr />
