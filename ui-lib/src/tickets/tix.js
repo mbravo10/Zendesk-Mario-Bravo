@@ -1,23 +1,37 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Card, Row, Col } from "react-bootstrap";
+import { Button, Card, Row } from "react-bootstrap";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
+import SoloTicket from "./soloTix";
 
 const site = "http://localhost:5000/api";
 
 export const LoadTix = () => {
   const [tickets, setTickets] = useState([]);
   const [onLoad, setOnLoad] = useState(false);
+  const [onError, setOnError] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
 
   const response = async () => {
     try {
       const res = await axios.get(site);
-      console.log(res);
       const data = [...res.data.tickets];
       setTickets([...data]);
       setOnLoad(true);
     } catch (error) {
       console.log(error);
       setOnLoad(false);
+      setOnError(true);
     }
   };
 
@@ -33,17 +47,22 @@ export const LoadTix = () => {
         <Card.Body>
           <Card.Title>Status: {e.status} </Card.Title>
           <Card.Text>{e.description}</Card.Text>
-          <Button variant="primary">Go to Ticket</Button>
+          <Button variant="primary" onClick={handleShow}>
+            Go to Ticket
+          </Button>
+
+          <SoloTicket props={show} onClick={() => handleClose()}>
+            {" "}
+            Hello
+          </SoloTicket>
         </Card.Body>
-        <Card.Footer className="text-muted">
-          {getDate(e.created_at)}
-          <Row>
-            <Col>Ticket# - {e.id}</Col>
-          </Row>
+        <Card.Footer>
+          Ticket #{e.id} - Date created: {getDate(e.created_at)}
         </Card.Footer>
       </Card>
     </article>
   ));
+
   return (
     <div>
       <Row>

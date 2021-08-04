@@ -1,5 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Alert, Container, Row, Col, Navbar, Nav } from "react-bootstrap";
+import { Container, Row, Col, Navbar, Nav } from "react-bootstrap";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { LoadTix } from "./tickets/tix";
 
 function App() {
